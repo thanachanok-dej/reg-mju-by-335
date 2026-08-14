@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบบริการการศึกษา - มหาวิทยาลัยแม่โจ้ (REG MJU)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css.css">
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand-group">
+                <button class="hamburger-btn" id="menuToggleBtn" onclick="toggleSidebar()"
+                    aria-label="Toggle Navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="brand" onclick="switchView('view-public-home')">
+                    <div class="brand-logo-box">
+                        <img src="/image/R.jpg" alt="MJU Logo" class="brand-logo"
+                            onerror="this.src='https://via.placeholder.com/120x40?text=REG+MJU'">
+                    </div>
+                    <div class="brand-info">
+                        <span class="app-title">REG MJU</span>
+                        <span class="app-subtitle">ระบบบริการการศึกษา มหาวิทยาลัยแม่โจ้</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <div class="term-badge">
+                    <i class="fa-regular fa-calendar"></i> ภาคการศึกษา 1/2569
+                </div>
+                <button class="btn btn-primary" id="loginHeaderBtn" onclick="handleAuthAction()">
+                    <i class="fa-solid fa-arrow-right-to-bracket" id="authIcon"></i> <span
+                        id="authBtnText">เข้าสู่ระบบ</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="app-container">
+        <aside class="app-sidebar" id="appSidebar">
+            <div class="user-card">
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                <div class="user-details">
+                    <span class="user-name" id="sidebarUserName">บุคคลทั่วไป</span>
+                    <span class="user-role" id="sidebarUserRole">Guest User</span>
+                </div>
+            </div>
+
+            <nav class="side-nav">
+                <div class="nav-section-label">เมนูทั่วไป</div>
+
+                <button class="nav-link active" onclick="switchView('view-public-home', this)">
+                    <i class="fa-solid fa-house"></i> หน้าหลัก / ข่าวประกาศ
+                </button>
+
+                <button class="nav-link disabled" title="เมนูนี้ยังไม่เปิดให้บริการ">
+                    <i class="fa-solid fa-book-open"></i> คู่มือการใช้งานเว็บไซต์
+                </button>
+                <button class="nav-link disabled" title="เมนูนี้ยังไม่เปิดให้บริการ">
+                    <i class="fa-solid fa-calendar-days"></i> ปฏิทินการศึกษา
+                </button>
+                <button class="nav-link disabled" title="เมนูนี้ยังไม่เปิดให้บริการ">
+                    <i class="fa-solid fa-receipt"></i> การชำระเงิน / ใบเสร็จ
+                </button>
+                <button class="nav-link disabled" title="เมนูนี้ยังไม่เปิดให้บริการ">
+                    <i class="fa-solid fa-file-arrow-down"></i> เอกสาร / แบบฟอร์ม
+                </button>
+                <button class="nav-link disabled" title="เมนูนี้ยังไม่เปิดให้บริการ">
+                    <i class="fa-solid fa-door-open"></i> ตรวจสอบห้องเรียน
+                </button>
+
+                <div class="nav-section-label">บริการนักศึกษา</div>
+
+                <button class="nav-link" onclick="handleProtectedView('view-student-profile', this)">
+                    <i class="fa-solid fa-id-card"></i> ระเบียนประวัติ
+                </button>
+
+                <button class="nav-link" onclick="handleProtectedView('view-class-schedule', this)">
+                    <i class="fa-solid fa-table-cells"></i> ตารางเรียน / สอบ
+                </button>
+
+                <button class="nav-link disabled" title="เมนูนี้ยังไม่เปิดให้บริการ">
+                    <i class="fa-solid fa-pen-to-square"></i> การลงทะเบียนรายวิชา
+                </button>
+                <button class="nav-link disabled" title="เมนูนี้ยังไม่เปิดให้บริการ">
+                    <i class="fa-solid fa-right-left"></i> การเทียบโอนหน่วยกิต
+                </button>
+            </nav>
+        </aside>
+
+        <main class="app-content">
+
+            <section id="view-public-home" class="view-pane active">
+                <div class="slider-container">
+                    <div class="slider-wrapper" id="sliderWrapper">
+                        <div class="slide"><img src="/image/12620261047522.jpg" alt="Banner 1"></div>
+                        <div class="slide"><img src="/image/24720261657549.jpg" alt="Banner 2"></div>
+                    </div>
+
+                    <button class="slider-arrow prev" onclick="moveSlide(-1)"><i
+                            class="fa-solid fa-chevron-left"></i></button>
+                    <button class="slider-arrow next" onclick="moveSlide(1)"><i
+                            class="fa-solid fa-chevron-right"></i></button>
+
+                    <div class="slider-dots">
+                        <span class="dot active" onclick="currentSlide(0)"></span>
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-bullhorn icon-accent"></i> ข่าวประกาศ / ประชาสัมพันธ์</h3>
+                    </div>
+                    <div class="news-grid">
+                        <div class="news-card">
+                            <div class="news-img-box">
+                                <img src="/image/4088_25690703084217.jpg" alt="News Image 1" class="news-card-img">
+                            </div>
+                            <div class="news-card-body">
+                                <span class="tag tag-green">ประกาศ</span>
+                                <h4 class="news-card-title">ถอนรายวิชาโดยได้รับอักษร W</h4>
+                                <span class="news-card-date"><i class="fa-regular fa-clock"></i> 30 มิถุนายน 2569</span>
+                            </div>
+                        </div>
+
+                        <div class="news-card">
+                            <div class="news-img-box">
+                                <img src="/image/การชำระเงิน.png" alt="News Image 2" class="news-card-img">
+                            </div>
+                            <div class="news-card-body">
+                                <span class="tag tag-blue">การชำระเงิน</span>
+                                <h4 class="news-card-title">กำหนดการ / ขั้นตอนการชำระเงิน</h4>
+                                <span class="news-card-date"><i class="fa-regular fa-clock"></i> 14 กรกฏาคม 2569</span>
+                            </div>
+                        </div>
+
+                        <div class="news-card">
+                            <div class="news-img-box">
+                                <img src="/image/พ้นสภาพ.jpg" alt="News Image 3" class="news-card-img">
+                            </div>
+                            <div class="news-card-body">
+                                <span class="tag tag-green">ประกาศ</span>
+                                <h4 class="news-card-title">เกณฑ์การพ้นสภานักศึกษา</h4>
+                                <span class="news-card-date"><i class="fa-regular fa-clock"></i> 30 มีนาคม 2569</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-student-profile" class="view-pane">
+                <div class="content-card profile-card-wrap">
+                    <div class="section-title-new">
+                        <i class="fa-solid fa-address-card icon-title"></i>
+                        <span>ระเบียนประวัตินักศึกษา</span>
+                    </div>
+
+                    <div class="profile-grid-container">
+                        <div class="profile-box">
+                            <div class="box-label">รหัสนักศึกษา</div>
+                            <div class="box-val text-primary-color font-bold">lecture 5657567890</div>
+                        </div>
+
+                        <div class="profile-box">
+                            <div class="box-label">ชื่อ-สกุล (TH)</div>
+                            <div class="box-val font-bold">นางสาวพอมี อันจะกิน</div>
+                        </div>
+
+                        <div class="profile-box">
+                            <div class="box-label">ชื่อ-สกุล (EN)</div>
+                            <div class="box-val">Miss Pormee Anjakin</div>
+                        </div>
+
+                        <div class="profile-box">
+                            <div class="box-label">คณะ / วิทยาเขต</div>
+                            <div class="box-val">มโนศาสตร์ / เชียงใหม่</div>
+                        </div>
+
+                        <div class="profile-box full-width">
+                            <div class="box-label">หลักสูตร</div>
+                            <div class="box-val font-bold">10101010 จินตนาการศาสตรบัณฑิต สาขาวิชานอนคิดจินตนาการ</div>
+                        </div>
+
+                        <div class="profile-box">
+                            <div class="box-label">เกรดเฉลี่ยสะสม (GPAX)</div>
+                            <div class="box-val text-primary-color font-bold">4.00</div>
+                        </div>
+
+                        <div class="profile-box">
+                            <div class="box-label">อาจารย์ที่ปรึกษา</div>
+                            <div class="box-val font-bold">ผศ.ดร.ประดิษฐ์ ประดอย</div>
+                        </div>
+
+                        <div class="profile-box">
+                            <div class="box-label">ระดับการศึกษา</div>
+                            <div class="box-val">ปริญญาตรี (4 ปี)</div>
+                        </div>
+
+                        <div class="profile-box">
+                            <div class="box-label">สถานภาพ</div>
+                            <div class="box-val text-success font-bold">กำลังศึกษา</div>
+                        </div>
+
+                        <div class="profile-box">
+                            <div class="box-label">จบการศึกษาจาก</div>
+                            <div class="box-val">โรงเรียน วัดดูยูมีน</div>
+                        </div>
+
+                        <div class="profile-box">
+                            <div class="box-label">วุฒิก่อนเข้ารับการศึกษา</div>
+                            <div class="box-val">มัธยมศึกษา 6 (4.00)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-class-schedule" class="view-pane">
+                <div class="content-card mb-20">
+                    <div class="section-title-new">
+                        <i class="fa-solid fa-table-cells icon-title"></i>
+                        <span>ตารางเรียน / สอบ</span>
+                    </div>
+
+                    <div class="table-container-new">
+                        <table class="schedule-table-new">
+                            <thead>
+                                <tr>
+                                    <th class="head-day">วัน/เวลา</th>
+                                    <th>8:00 - 9:00</th>
+                                    <th>9:00 - 10:00</th>
+                                    <th>10:00 - 11:00</th>
+                                    <th>11:00 - 12:00</th>
+                                    <th>13:00 - 14:00</th>
+                                    <th>14:00 - 15:00</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="day-cell-new day-mon">จันทร์</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="2">
+                                        <div class="slot-box-new">
+                                            <div class="slot-code">10110001</div>
+                                            <div class="slot-room">lab ห้องนอน 1-7 </div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <div class="slot-box-new">
+                                            <div class="slot-code">11111000</div>
+                                            <div class="slot-room">lab ห้องนอน 1-7 </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="day-cell-new day-tue">อังคาร</td>
+                                    <td></td>
+                                    <td>
+                                        <div class="slot-box-new">
+                                            <div class="slot-code">11001100</div>
+                                            <div class="slot-room">lecture 5657</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="slot-box-new">
+                                            <div class="slot-code">10000001</div>
+                                            <div class="slot-room">lecture 1122</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td colspan="2">
+                                        <div class="slot-box-new">
+                                            <div class="slot-code">10111100</div>
+                                            <div class="slot-room">lab ห้องนอน 1-7 </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="day-cell-new day-wed">พุธ</td>
+                                    <td></td>
+                                    <td colspan="2">
+                                        <div class="slot-box-new">
+                                            <div class="slot-code">10100001</div>
+                                            <div class="slot-room">lecture 5657</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="day-cell-new day-thu">พฤหัสบดี</td>
+                                    <td></td>
+                                    <td colspan="2">
+                                        <div class="slot-box-new">
+                                            <div class="slot-code">10111100</div>
+                                            <div class="slot-room">lab ห้องนอน 1-7 </div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td colspan="2">
+                                        <div class="slot-box-new">
+                                            <div class="slot-code">10110001</div>
+                                            <div class="slot-room">lab ห้องนอน 1-7 </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="day-cell-new day-fri">ศุกร์</td>
+                                    <td></td>
+                                    <td>
+                                        <div class="slot-box-new">
+                                            <div class="slot-code">11001100</div>
+                                            <div class="slot-room">lecture 5657</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="slot-box-new">
+                                            <div class="slot-code">10000001</div>
+                                            <div class="slot-room">lecture 1122</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td colspan="2">
+                                        <div class="slot-box-new">
+                                            <div class="slot-code">11111000</div>
+                                            <div class="slot-room">lab ห้องนอน 1-7 </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="exam-table-header">รายละเอียดวิชาสอบ</div>
+                    <div class="table-container">
+                        <table class="exam-table">
+                            <thead>
+                                <tr>
+                                    <th>รหัสวิชา</th>
+                                    <th>ชื่อรายวิชา</th>
+                                    <th>กลุ่ม</th>
+                                    <th>สอบกลางภาค</th>
+                                    <th>สอบปลายภาค</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-bold text-center">11001100</td>
+                                    <td>
+                                        <div class="font-bold">นอนเพื่อหลับ</div>
+                                        <div class="en-sub">Sleep in order to sleep</div>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center">-</td>
+                                    <td class="text-center">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-center">10100001</td>
+                                    <td>
+                                        <div class="font-bold">จินตการการเพื่อสร้างความสุข</div>
+                                        <div class="en-sub">Imagination for creating happiness</div>
+                                    </td>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center">-</td>
+                                    <td class="text-center">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-center">10111100</td>
+                                    <td>
+                                        <div class="font-bold">ความสัมพันธ์ระหว่างการนอนกับการใช้จินตนาการ</div>
+                                        <div class="en-sub">The Relationship Between Sleep and the Use of Imagination
+                                        </div>
+                                    </td>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center">-</td>
+                                    <td class="text-center">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-center">11111000</td>
+                                    <td>
+                                        <div class="font-bold">จินตนาการศาสตร์</div>
+                                        <div class="en-sub">The Study of Imagination</div>
+                                    </td>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center">-</td>
+                                    <td class="text-center">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-center">10110001</td>
+                                    <td>
+                                        <div class="font-bold">ทักษะการแก้ปัญหาระหว่างนอน</div>
+                                        <div class="en-sub">Problem-Solving Skills During Sleep</div>
+                                    </td>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center">-</td>
+                                    <td class="text-center">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-center">10000001</td>
+                                    <td>
+                                        <div class="font-bold">ภาษาเอเลียนศาสตร์ เบื้องต้น</div>
+                                        <div class="en-sub">Introduction to Alien Linguistics</div>
+                                    </td>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center">-</td>
+                                    <td class="text-center">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div class="modal-backdrop" id="loginModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>เข้าสู่ระบบ REG MJU</h3>
+                <button type="button" class="close-btn" onclick="closeLoginModal()"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <p class="login-notice"><i class="fa-solid fa-lock"></i> กรุณาเข้าสู่ระบบเพื่อเข้าถึงข้อมูลบริการนักศึกษา
+            </p>
+
+            <form onsubmit="performLogin(event)">
+                <div class="input-field">
+                    <label>รหัสนักศึกษา / ผู้ใช้งาน</label>
+                    <input type="text" id="usernameInput" value="MJU1234567890" required>
+                </div>
+                <div class="input-field">
+                    <label>รหัสผ่าน</label>
+                    <input type="password" value="1234567890" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">เข้าสู่ระบบ</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let targetViewAfterLogin = 'view-student-profile';
+        let slideIndex = 0;
+
+        window.onload = function () {
+            checkAuthState();
+        };
+
+        function checkAuthState() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+            const nameEl = document.getElementById('sidebarUserName');
+            const roleEl = document.getElementById('sidebarUserRole');
+            const btnText = document.getElementById('authBtnText');
+            const authIcon = document.getElementById('authIcon');
+
+            if (isLoggedIn) {
+                nameEl.innerText = 'นางสาวพอมี อันจะกิน';
+                roleEl.innerText = 'นักศึกษา (1234567890)';
+                btnText.innerText = 'ออกจากระบบ';
+                authIcon.className = 'fa-solid fa-arrow-right-from-bracket';
+            } else {
+                nameEl.innerText = 'บุคคลทั่วไป';
+                roleEl.innerText = 'Guest User';
+                btnText.innerText = 'เข้าสู่ระบบ';
+                authIcon.className = 'fa-solid fa-arrow-right-to-bracket';
+            }
+        }
+
+        function switchView(viewId, btnElement = null) {
+            const panes = document.querySelectorAll('.view-pane');
+            panes.forEach(pane => pane.classList.remove('active'));
+
+            const targetPane = document.getElementById(viewId);
+            if (targetPane) targetPane.classList.add('active');
+
+            if (btnElement) {
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => link.classList.remove('active'));
+                btnElement.classList.add('active');
+            }
+
+            closeSidebar();
+        }
+
+        function handleProtectedView(viewId, btnElement) {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn) {
+                switchView(viewId, btnElement);
+            } else {
+                targetViewAfterLogin = viewId;
+                openLoginModal();
+            }
+        }
+
+        function handleAuthAction() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn) {
+                sessionStorage.removeItem('isLoggedIn');
+                checkAuthState();
+                switchView('view-public-home');
+                alert('ออกจากระบบเรียบร้อยแล้ว');
+            } else {
+                openLoginModal();
+            }
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function performLogin(e) {
+            e.preventDefault();
+            sessionStorage.setItem('isLoggedIn', 'true');
+            checkAuthState();
+            closeLoginModal();
+            switchView(targetViewAfterLogin);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('appSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('appSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar) sidebar.classList.remove('open');
+            if (overlay) overlay.classList.remove('active');
+        }
+
+        function updateSlider() {
+            const wrapper = document.getElementById('sliderWrapper');
+            const dots = document.querySelectorAll('.slider-dots .dot');
+            if (!wrapper) return;
+
+            wrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === slideIndex);
+            });
+        }
+
+        function moveSlide(direction) {
+            const slides = document.querySelectorAll('.slide');
+            slideIndex += direction;
+            if (slideIndex >= slides.length) slideIndex = 0;
+            if (slideIndex < 0) slideIndex = slides.length - 1;
+            updateSlider();
+        }
+
+        function currentSlide(index) {
+            slideIndex = index;
+            updateSlider();
+        }
+    </script>
+
+    <footer class="app-footer">
+        <p>Contact Staff : กลุ่มภารกิจทะเบียนเรียน ประมวลผล และรับเข้า 0-9999-9999</p>
+    </footer>
+</body>
+
+</html>
